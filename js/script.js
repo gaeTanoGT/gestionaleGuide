@@ -13,6 +13,20 @@ let values = [];
 
 document.getElementById('date').innerHTML = date;
 
+fetch(`https://script.google.com/macros/s/${YOUR_ID}/exec`, {
+        redirect: "follow",
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+          'Content-Type': "text/plain;charset=utf-8"
+        }
+      })
+      .then(response => response.text())
+      .then(result => {
+        const res = JSON.parse(result);
+        console.log(res);
+      });
+
 //request 1
 invia(url1);
 
