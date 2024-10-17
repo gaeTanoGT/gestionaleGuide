@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Giornaliero e Tabella Dati</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div id="formView" class="view">
+            <h1>Chi ha guidato oggi?</h1>
+            <form id="formGuide">
+                <label for="date">Data:</label> <p id="date" class="inline-date"></p>
+
+                <p id="paragraph" class="loading">Caricamento...</p>
+                
+                <fieldset id="driverFieldset">
+                    <legend>Chi ha guidato?</legend>
+                    <div class="radio-group">
+                        <input type="radio" id="gori" name="driver" value="0" required>
+                        <label for="gori">lore</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="del_carlo" name="driver" value="1">
+                        <label for="del_carlo">andre</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="calissi" name="driver" value="2">
+                        <label for="calissi">enzo</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="torrisi" name="driver" value="3">
+                        <label for="torrisi">gae</label>
+                    </div>
+                    <button type="submit" class="submit">Invia</button>
+                </fieldset>
+            </form>
+
+            <pre id='results'></pre>
+        </div>
+
+        <div id="tableView" class="view">
+            <h3>Tabella Guide</h3>
+            <div id="spreadsheetData"></div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://docs.google.com/spreadsheets/d/1l3LMC83_rwe69MIAh1QMqVjESxaVm61nLMU9Xeaye8s/edit?usp=sharing" target="_blank">Foglio Google</a>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

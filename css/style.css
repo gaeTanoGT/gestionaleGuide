@@ -1,0 +1,125 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
+}
+
+h1, h3 {
+    color: #2c3e50;
+}
+
+.view {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+form {
+    margin-top: 20px;
+}
+
+.inline-date {
+    display: inline;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.loading {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+legend {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.radio-group {
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+.submit {
+    background-color: #2ecc71;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.submit:hover {
+    background-color: #27ae60;
+}
+
+#spreadsheetData table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#spreadsheetData th, #spreadsheetData td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+#spreadsheetData tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#spreadsheetData tr:first-child {
+    background-color: #3498db;
+    color: white;
+}
+
+.content-wrapper {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: white;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #2980b9;
+}
