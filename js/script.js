@@ -17,10 +17,18 @@ document.getElementById('date').innerHTML = date;
 invia(url1);
 
 function invia(url) {
-    fetch(url)
+    fetch(url, {
+        redirect: "follow",
+        method: "GET",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+    })
     .then(res => {
-        console.log(res);
-        return res.json()
+        let code = res.status;
+        console.log(code);
+        if(code == 200) return res.json()
+        else return res.text();
     })
     .then(data => {
         console.log(data);
