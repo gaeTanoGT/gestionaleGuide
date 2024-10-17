@@ -13,7 +13,7 @@ let values = [];
 
 document.getElementById('date').innerHTML = date;
 
-fetch(`https://script.google.com/macros/s/${YOUR_ID}/exec`, {
+fetch(url, {
         redirect: "follow",
         method: 'POST',
         body: JSON.stringify({}),
