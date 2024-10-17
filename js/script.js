@@ -27,13 +27,13 @@ function invia(url) {
     .then(res => {
         let code = res.status;
         console.log(code);
-        if(code == 200) return res.json()
+        if(code == 200) return res.text()
         else return res.text();
     })
     .then(data => {
         console.log(data);
-        let dataJs = JSON.parse(JSON.stringify(data));
-        console.log(dataJs);
+        //let dataJs = JSON.parse(JSON.stringify(data));
+        //console.log(dataJs);
         paragraph.style.display = 'none';
         try {
             // Get the div where we'll insert the data
