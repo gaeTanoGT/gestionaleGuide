@@ -18,8 +18,12 @@ invia(url1);
 
 function invia(url) {
     fetch(url)
-    .then(res => res.json())
+    .then(res => {
+        console.log(res);
+        return res.json()
+    })
     .then(data => {
+        console.log(data);
         let dataJs = JSON.parse(JSON.stringify(data));
         console.log(dataJs);
         paragraph.style.display = 'none';
@@ -68,11 +72,11 @@ function invia(url) {
             showDriverFieldset(last == -1)
             if(last != -1) updateParagraph(parseInt(last))
         } catch (error) {
-            
+            console.log(error);
         }
     })
     .catch(error => {
-        
+        console.log(error);
     });
 }
 
