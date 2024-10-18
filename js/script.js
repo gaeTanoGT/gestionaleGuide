@@ -17,32 +17,19 @@ document.getElementById('date').innerHTML = date;
 invia(url1);
 
 function invia(url) {
-    fetch(url, {
-        redirect: "follow",
-        method: "GET",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-        },
-    })
-    .then(res => {
-        let code = res.status;
-        console.log(code);
-        if(code == 200) return res.json()
-        else return res.text();
-    })
+    fetch(url)
+    .then(res => 
+        res.json()
+    )
     .then(data => {
-        console.log(data);
         let dataJs = JSON.parse(JSON.stringify(data));
         console.log(dataJs);
         paragraph.style.display = 'none';
         try {
-            // Get the div where we'll insert the data
             const spreadsheetDataDiv = document.getElementById('spreadsheetData');
             
-            // Clear any existing content in the div
             spreadsheetDataDiv.innerHTML = '';
 
-            // Get all keys except the last one
             keys.push("chi")
             values.push("n passaggi")
             
@@ -51,19 +38,14 @@ function invia(url) {
                 values.push(k[1]);
             }
 
-            // Create a table to display the data
             const table = document.createElement('table');
-            table.border = '1';
 
-            // Create rows for each key-value pair
             for (let i = 0; i < keys.length; i++) {
                 const row = table.insertRow();
                 
-                // Key cell
                 const keyCell = row.insertCell();
                 keyCell.textContent = keys[i];
                 
-                // Value cell
                 const valueCell = row.insertCell();
                 valueCell.textContent = values[i];
                 valueCell.id = 'valueCell'+i;
@@ -71,16 +53,22 @@ function invia(url) {
                 keyCell.style.fontWeight = 'bold';
             }
 
-            // Append the table to the div
             spreadsheetDataDiv.appendChild(table);
 
-            // Handle the last element as before
+            /*valuto l'ultimo elemento: 
+                -1: nessuno ha guidato
+                0: gori
+                1: delca
+                2: enzo
+                3: io
+            */
             let last = Object.values(Object.values(dataJs)[Object.values(dataJs).length - 1])[0];
             console.log(last);
             showDriverFieldset(last == -1)
-            if(last != -1) updateParagraph(parseInt(last))
+            if(last != -1) 
+                updateParagraph(parseInt(last))
         } catch (error) {
-            console.log(error);
+            
         }
     })
     .catch(error => {
