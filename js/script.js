@@ -1,6 +1,6 @@
 var date = new Date().toLocaleDateString();
 const val = date;
-const url='https://script.google.com/macros/library/d/1Lf8nUpxb1ZFVYDAtXCOvX9KUe128C-OfoqNyfQfIEl-YLPF0_ugMd-nQ/12';
+const url='https://script.google.com/macros/library/d/1Lf8nUpxb1ZFVYDAtXCOvX9KUe128C-OfoqNyfQfIEl-YLPF0_ugMd-nQ/9';
 
 const form = document.getElementById('formGuide');
 const paragraph = document.getElementById('paragraph');
