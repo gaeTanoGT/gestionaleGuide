@@ -1,9 +1,8 @@
 // **!!! SOSTITUISCI QUESTO URL con il tuo URL /exec del deployment FINALE !!!**
 // NON USARE L'URL /dev
-const url='https://script.google.com/macros/s/AKfycbwCmRv1uzVchZ6W1Z7pjfn2Zk7YwerrlOB2PaQa8NfUltMdtIg2rH2g7EJoRIbRyl1Scg/exec';
-
 var date = new Date().toLocaleDateString();
 const val = date;
+const url='https://script.google.com/macros/library/d/1Lf8nUpxb1ZFVYDAtXCOvX9KUe128C-OfoqNyfQfIEl-YLPF0_ugMd-nQ/9';
 
 // ... (le tue dichiarazioni DOM e variabili restano qui) ...
 const form = document.getElementById('formGuide');
