@@ -2,7 +2,7 @@
 // NON USARE L'URL /dev
 var date = new Date().toLocaleDateString();
 const val = date;
-const url='https://script.google.com/macros/library/d/1Lf8nUpxb1ZFVYDAtXCOvX9KUe128C-OfoqNyfQfIEl-YLPF0_ugMd-nQ/9';
+const url='https://script.google.com/macros/s/AKfycbyCn3RydZ_UFcIgPp_hGA4JkvHkg4HQ8HYRct5E7ub266ohDjMgU61dzDlPzU9ddIQ7VQ/exec';
 
 // ... (le tue dichiarazioni DOM e variabili restano qui) ...
 const form = document.getElementById('formGuide');
