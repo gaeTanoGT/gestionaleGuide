@@ -1,7 +1,11 @@
+// **!!! SOSTITUISCI QUESTO URL con il tuo URL /exec del deployment FINALE !!!**
+// NON USARE L'URL /dev
+
 var date = new Date().toLocaleDateString();
 const val = date;
 const url='https://script.google.com/macros/s/AKfycbyKAERn4aKwpD49rVpF0Vi3dA_QQzYwAwLklQzcvjJSAMWRPKrakuFtypz_PrjO_5mEhw/exec';
 
+// ... (le tue dichiarazioni DOM e variabili restano qui) ...
 const form = document.getElementById('formGuide');
 const paragraph = document.getElementById('paragraph');
 const fieldset = document.getElementById('driverFieldset');
@@ -9,27 +13,28 @@ fieldset.style.display = 'none';
 
 var keys = [];
 var values = [];
-var who
+var who; // Non inizializzato qui
 
 document.getElementById('date').innerHTML = date;
 
-//request 1
-const url1 = url+"?date="+val;
+// Richiesta 1: Carica i dati iniziali
+const url1 = url + "?date=" + val;
 invia(url1);
 
-function updateSpreadSheet(dataJs){
+// ... (tutte le tue altre funzioni, ad eccezione di updateSpreadSheet e invia, restano invariate) ...
+
+function updateSpreadSheet(totali, modifiedStatus){ // Modificata per la nuova struttura JSON
     try {
         const spreadsheetDataDiv = document.getElementById('spreadsheetData');
-        
         spreadsheetDataDiv.innerHTML = '';
-
-        keys.push("chi")
-        values.push("n passaggi")
         
-        //scorri tutti gli elementi dell'oggetto ad eccezione dell'ultimo
-        for(let k of Object.values(dataJs).slice(0, -1)){
-            keys.push(k[0]);
-            values.push(k[1]);
+        keys = ["chi"];
+        values = ["n passaggi"];
+        
+        // Scorri i totali (che sono oggetti, non array bidimensionali)
+        for(let item of totali){
+            keys.push(item.chi);
+            values.push(item.n_passaggi);
         }
 
         const table = document.createElement('table');
@@ -49,115 +54,54 @@ function updateSpreadSheet(dataJs){
 
         spreadsheetDataDiv.appendChild(table);
 
+        // Aggiorna lo stato del campo/paragrafo dopo aver aggiornato la tabella
+        showDriverFieldset(modifiedStatus == -1);
+        showParagraph(modifiedStatus != -1);
+        updateParagraph(parseInt(modifiedStatus));
+
     } catch (error) {
-        
+        console.error("Errore in updateSpreadSheet:", error);
     }
 }
 
 function invia(url) {
-    fetch(url)
-    .then(res => 
-        res.json()
-    )
+    // Aggiunto 'no-cache' per evitare problemi di cache del browser durante i test
+    fetch(url, { cache: 'no-cache' }) 
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        // Il browser solleverà un errore CORS prima di arrivare qui se non risolto
+        return res.json();
+    })
     .then(data => {
-        let dataJs = JSON.parse(JSON.stringify(data));
-        console.log(dataJs);
+        // console.log("Dati ricevuti:", data); // Utile per il debug
 
-        /*analizzo l'ultimo elemento: 
-            -1: nessuno ha guidato
-            0: gori
-            1: delca
-            2: enzo
-            3: io
-        */
-        let lastKey = Object.keys(Object.values(dataJs)[Object.values(dataJs).length - 1])[0]
-        let last = Object.values(Object.values(dataJs)[Object.values(dataJs).length - 1])[0]
-
-        showDriverFieldset(last == -1)
-        showParagraph(last!=-1)
-        updateParagraph(parseInt(last))
-
-        if(lastKey == "modified"){
-            updateSpreadSheet(dataJs)
-            return
+        // RICHIESTA 1: Caricamento iniziale (ha 'totali' e 'modified')
+        if("totali" in data && "modified" in data){
+            updateSpreadSheet(data.totali, data.modified);
+            return;
         }
 
-        if(!dataJs.done){
-            showParagraph(true)
-            updateParagraph(-1)
-            return
+        // RICHIESTA 2: Dopo l'invio del form (ha 'done')
+        if("done" in data){
+            if(data.done){
+                updateTable(who);
+                showParagraph(true);
+            } else {
+                // Caso in cui il form è stato compilato da un altro (logica interna dello script GAS)
+                showParagraph(true);
+                updateParagraph(-1); // Mostra "form gia' compilato da qualcun altro"
+            }
+            return data.done;
         }
 
-        updateTable(who)
-
-        return dataJs.done
     })
     .catch(error => {
-        console.log(error);
+        console.error("Errore FETCH (CORS/Rete/JSON):", error);
+        // Puoi aggiungere qui una logica per visualizzare un errore utente
+        paragraph.textContent = "ERRORE DI CARICAMENTO! Controlla la console per i dettagli (potrebbe essere un problema CORS).";
+        showParagraph(true);
+        showDriverFieldset(false);
     });
 }
-
-function showDriverFieldset(st){
-    fieldset.style.display = (st==true) ? 'block' : 'none';
-}
-
-function showParagraph(st){
-    paragraph.style.display = (st==true) ? 'block' : 'none';
-}
-
-function updateTable(who){
-    let newWho = parseInt(who)+1;
-    
-    //tabella
-    const valueCell = document.getElementById('valueCell'+newWho);
-    values[newWho]++;
-    valueCell.textContent = values[newWho];
-
-    //paragrafo
-    updateParagraph(parseInt(who));
-}
-
-function updateParagraph(who){
-    if(who == -1){
-        //showDriverFieldset(false)
-        paragraph.textContent = "form gia' compilato da qualcun altro"
-        return
-    }
-
-    paragraph.textContent = "Oggi ha guidato " + whoString(who);
-    showParagraph(true)
-}
-
-function whoString(who){
-    switch(who){
-        case -1:
-            return "form gia' compilato da qualcun altro"
-        case 0:
-            return "lore";
-        case 1:
-            return "andre";
-        case 2:
-            return "enzo";
-        case 3:
-            return "gae";
-    }
-}
-
-//invio dati form
-document.querySelector('.submit').addEventListener('click', function(e){
-    const selectedRadio = document.querySelector('input[name="driver"]:checked');
-    who = selectedRadio.value;
-    const url2 = url+"?who="+who;
-
-    invia(url2)
-    
-    paragraph.textContent = "Invio form...";
-    showParagraph(true)
-
-    showDriverFieldset(false);
-})
-
-// Gestione del form (non aggiorna la pagina)
-document.getElementById('formGuide').addEventListener('submit', function(e) {
-    e.preventDefault();
-});
