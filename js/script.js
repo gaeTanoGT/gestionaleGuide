@@ -1,7 +1,8 @@
 var date = new Date().toLocaleDateString();
 const val = date;
-const url = 'https://cors-anywhere.herokuapp.com/' + 'https://script.google.com/macros/s/AKfycbxnORrrNE8yLrRIqgbDyoGE3kZpr7OpWtDUWCZzQgOyhv2O2iD_jmrgBg9CAY7qUQ5kCg/exec';
+//const url = 'https://cors-anywhere.herokuapp.com/' + 'https://script.google.com/macros/s/AKfycbxnORrrNE8yLrRIqgbDyoGE3kZpr7OpWtDUWCZzQgOyhv2O2iD_jmrgBg9CAY7qUQ5kCg/exec';
 //const url='https://script.google.com/macros/s/AKfycbxnORrrNE8yLrRIqgbDyoGE3kZpr7OpWtDUWCZzQgOyhv2O2iD_jmrgBg9CAY7qUQ5kCg/exec';
+const url = 'https://gas-cors-proxy.gaetanotorrisi18.workers.dev/'
 
 const form = document.getElementById('formGuide');
 const paragraph = document.getElementById('paragraph');
